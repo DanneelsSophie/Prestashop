@@ -15,7 +15,9 @@ class MonModule extends Module
 	
 	public function getContent()
 	{
-		return 'coucou';
+		
+		return $this->display(__FILE__, 'getContent.tpl');
+
 	}
 	}
 
