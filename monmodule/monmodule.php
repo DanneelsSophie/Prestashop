@@ -6,15 +6,22 @@ class MonModule extends Module
 		public function install()
 	{
 		return parent::install() &&
-		$this->registerHook('displayProductTabContent');
+				$this->registerHook('displayHome');
 	
 	}
 	
-	public function hookDisplayProductTabContent
+	public function hookdisplayHome
 	($params)
-	{
-		return '<b>Display me on product page</b>';
+	{		
+	/**$nombredeligne = Db::getInstance()->getValue('SELECT COUNT(*)
+	FROM `'._DB_PREFIX_.'helperlist`');**/
+	$result = Db::getInstance()->getRow('
+	SELECT *
+	FROM `'._DB_PREFIX_.'helperlist`
+	 ORDER BY RAND()');
+	return '<div ="commentaire"> Commentaire aléatoire : </br> Titre:'.$result['id_titre']."</br> Content :".$result['id_contenu'].'<div>';
 	}
+	
 	
 
 		
@@ -86,7 +93,8 @@ class MonModule extends Module
 	}
 	
 	public function getContent()
-	{-
+	{
+	
 		$this->processConfiguration();
 		$this->assignConfiguration();
 		return $this->display(__FILE__, 'getContent.tpl');
