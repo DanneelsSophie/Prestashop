@@ -2,19 +2,11 @@
 Module prestashop
 
 
-Dimanche 15 Janvier :
-
-Création d'une base pour essaie.
-comprendre easyPhp
-Connexion de la base
-Voir des livres pour comprendre Prestashop
-
-
-Lundi 16 Janvier :
-
-Supprimer base de données (essaie d'hier)
-regarder le site prestashop 
-supprimer tous ce qu'il y avait dessus avec un module cleaner
-Tuto de prestashop 
-
--Comprendre créer un Module objectif d'aujourd'hui.
+Samedi 04/02/2017 : 
+  -Pas de partie Admin , helperlist
+  -ObjectModel : Ok , Module Hook formulaire : Ok
+  -Base de données création , install uninstall : Ok 
+  -Changer le nom de la base : A faire
+  
+  
+  
