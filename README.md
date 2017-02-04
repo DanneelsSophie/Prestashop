@@ -1,5 +1,7 @@
 # Prestashop
 Module prestashop
 
- 
-1er Etape : Essaie de connecter sans le ModelObject ,une insertion avec le formulaire
+ModelObject :OK -- pas complet
+
+1er etape : Visualiser le premier avis sur la page 
+puis ensuite en choisir un de façon aléatoirement 
