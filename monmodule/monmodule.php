@@ -1,14 +1,57 @@
 <?php
 
 require_once('commentaire.php');
+
+if (!defined('_PS_VERSION_')) {
+    exit;
+}
 class MonModule extends Module
 {
+	public function loadSQLFile($sql_file)
+	{
+		
+		$sql_content = file_get_contents($sql_file);
+
+	
+		$sql_content = str_replace('PREFIX_', _DB_PREFIX_, $sql_content);
+		$sql_requests = preg_split("/;\s*[\r\n]+/", $sql_content);
+
+		
+		$result = true;
+		foreach($sql_requests AS $request)
+			if (!empty($request))
+				$result &= Db::getInstance()->execute(trim($request));
+
+		
+		return $result;
+	}
 		public function install()
 	{
+		$sql_file = dirname(__FILE__).'/install/install.sql';
+		if (!$this->loadSQLFile($sql_file))
+			return false;
+		
 		return parent::install() &&
 				$this->registerHook('displayHome');
 	
 	}
+	
+	//faire la uninstall
+	public function uninstall()
+	{
+		if (!parent::uninstall())
+			return false;
+		
+		$sql_file = dirname(__FILE__).'/install/uninstall.sql';
+		if (!$this->loadSQLFile($sql_file))
+			return false;
+		
+		Configuration::deleteByName('MYMOD_COMMENTS');
+		Configuration::deleteByName('MYMOD_TITRE');
+		return true;
+	}
+	
+	
 	
 	public function hookdisplayHome
 	($params)
@@ -19,7 +62,14 @@ class MonModule extends Module
 	SELECT *
 	FROM `'._DB_PREFIX_.'helperlist`
 	 ORDER BY RAND()');
+	//faire une condition si result renvoie un tableau vide ne pas afficher
+	//sinon afficher
+	if (empty($result)){
+		return "";
+	}
+	else{
 	return '<div ="commentaire"> Commentaire aléatoire : </br> Titre:'.$result['id_titre']."</br> Content :".$result['id_contenu'].'<div>';
+	}
 	}
 	
 	
@@ -28,6 +78,7 @@ class MonModule extends Module
 	
 		public function __construct()
 	{
+		
 		$this->name = 'monmodule';
 		$this->tab = 'front_office_features';
 		$this->version = '0.1';
